@@ -40,6 +40,18 @@ int main()
       // "close requested" event: we close the window
       if (event.type == sf::Event::Closed)
         window.close();
+
+      //get keyboard input
+      if (event.type == sf::Event::KeyPressed)
+      {
+          game.keyPressed(event);
+      }
+      //get mouse input
+      if (event.type == sf::Event::
+          MouseButtonPressed)
+      {
+          game.mouseClicked(event);
+      }
     }
 
 
@@ -49,6 +61,7 @@ int main()
     window.clear(sf::Color::Black);
 
     //'render' element of the game loop
+    window.setFramerateLimit(60);
     game.render();
     window.display();
   }
