@@ -22,6 +22,9 @@ class Game
   sf::Texture character_texture;
   sf::Texture passport_texture;
 
+  sf::Sprite background;
+  sf::Texture background_texture;
+
 };
 
 #endif // PLATFORMER_GAME_H
