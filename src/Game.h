@@ -17,8 +17,10 @@ class Game
 
  private:
   sf::RenderWindow& window;
-  sf::Sprite ball;
-  sf::Texture ball_texture;
+  sf::Sprite* character;
+  sf::Sprite* passport;
+  sf::Texture character_texture;
+  sf::Texture passport_texture;
 
 };
 
