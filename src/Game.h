@@ -16,13 +16,20 @@ class Game
   void keyPressed(sf::Event event);
 
  private:
+	 
+
   sf::RenderWindow& window;
   sf::Sprite* character;
   sf::Sprite* passport;
   sf::Texture character_texture;
   sf::Texture passport_texture;
 
-  sf::Sprite background;
+  sf::Sprite* acceptButton;
+  sf::Texture acceptButton_texture;
+  sf::Sprite* rejectButton;
+  sf::Texture rejectButton_texture;
+
+  sf::Sprite* background;
   sf::Texture background_texture;
 
 };
