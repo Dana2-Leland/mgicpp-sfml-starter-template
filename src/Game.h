@@ -19,18 +19,33 @@ class Game
 	 
 
   sf::RenderWindow& window;
-  sf::Sprite* character;
-  sf::Sprite* passport;
-  sf::Texture character_texture;
-  sf::Texture passport_texture;
 
-  sf::Sprite* acceptButton;
-  sf::Texture acceptButton_texture;
-  sf::Sprite* rejectButton;
-  sf::Texture rejectButton_texture;
-
-  sf::Sprite* background;
+  //background
+  sf::Sprite background;
   sf::Texture background_texture;
+
+  //bird
+  sf::Sprite bird; 
+  sf::Texture bird_texture;
+
+  //Title Text
+  sf:: Text title_text;
+  sf::Font font;
+
+  //Menu Text Variables
+  sf::Text title_play_text;
+  sf::Text title_quit_text;
+  sf::Text title_prompt_text;
+
+
+  //boolean variables
+  bool in_menu = false;
+  bool play_selected = false;
+  bool reverse = false;
+
+  //double variables
+  double speed = 200.0;
+ 
 
 };
 

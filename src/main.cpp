@@ -18,7 +18,21 @@ int main()
     //run the init function of the game class and check it all initialises ok
     if (!game.init())
     {
-        return 0;
+      // "close requested" event: we close the window
+      if (event.type == sf::Event::Closed)
+        window.close();
+
+      //get keyboard input
+      if (event.type == sf::Event::KeyPressed)
+      {
+          game.keyPressed(event);
+      }
+      //get mouse input
+      if (event.type == sf::Event::
+          MouseButtonPressed)
+      {
+          game.mouseClicked(event);
+      }
     }
 
     // A Clock starts counting as soon as it's created
@@ -34,13 +48,11 @@ int main()
         sf::Time time = clock.restart();
         float dt = time.asSeconds();
 
-        //'process inputs' element of the game loop
-        while (window.pollEvent(event))
-        {
-            // "close requested" event: we close the window
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
+    //'render' element of the game loop
+    window.setFramerateLimit(60);
+    game.render();
+    window.display();
+  }
 
 
         //'update' element of the game loop
