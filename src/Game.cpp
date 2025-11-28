@@ -108,10 +108,10 @@ void Game::dragSprite(sf::Sprite* sprite)
 
 bool Game::init()
 {
-
 	background = new sf::Sprite;
 	acceptButton = new sf::Sprite;
 	rejectButton = new sf::Sprite;
+	stamp = new sf::Sprite;
 
 	newAnimal();
 	//load background texture
@@ -142,25 +142,6 @@ void Game::update(float dt)
 {
 	dragSprite(dragged);
 
-
-}
-
-void Game::renderStamp(bool accepted) {
-	gameStamp = new sf::Sprite; 
-	switch (accepted) {
-	case(true):
-		if (!gameStamp_texture.loadFromFile("../Data/Images/Critter Crossing Customs/accept.png")) {
-			std::cout << "accept stamp texture could not be loaded";
-		}
-		break;
-	case(false):
-		if (!gameStamp_texture.loadFromFile("../Data/Images/Critter Crossing Customs/reject.png")) {
-			std::cout << "reject stamp texture could not be loaded";
-		}
-		break;
-	}
-	gameStamp->setPosition(passport->getPosition().x + passport->getPosition().x / 2, passport->getPosition().y + passport->getPosition().y / 2);
-	window.draw(*gameStamp);
 }
 
 void Game::render()
@@ -170,11 +151,11 @@ void Game::render()
 	window.draw(*passport);
 	window.draw(*acceptButton);
 	window.draw(*rejectButton);
+	
 }
 
 void Game::mouseButtonPressed(sf::Event event)
 {
-
 	//get the click position
 	sf::Vector2i click = sf::Mouse::getPosition(window);
 	
@@ -187,10 +168,10 @@ void Game::mouseButtonPressed(sf::Event event)
 			dragged = passport;
 		}
 		else if (acceptButton->getGlobalBounds().contains(clickf)) {
-			renderStamp(true);
+			
 		}
 		else if (rejectButton->getGlobalBounds().contains(clickf)) {
-			renderStamp(false);
+			
 		}
 	}
 

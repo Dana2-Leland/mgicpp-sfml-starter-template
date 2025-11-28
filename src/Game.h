@@ -17,10 +17,9 @@ class Game
   void keyPressed(sf::Event event);
   void mouseButtonPressed(sf::Event event);
   void mouseButtonReleased(sf::Event event);
-  void renderStamp(bool accepted);
+  void placeStamp(sf::Sprite stamp, sf::Sprite passport, bool valid);
 
  private:
-
 	 sf::Sprite* dragged = nullptr;
 
 	 sf::RenderWindow& window;
@@ -36,9 +35,6 @@ class Game
 
 	 sf::Sprite* background;
 	 sf::Texture background_texture;
-
-	 sf::Sprite* gameStamp;
-	 sf::Texture gameStamp_texture;
 
 };
 
