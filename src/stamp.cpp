@@ -16,5 +16,4 @@ void stamp::placeStamp(sf::Sprite passport)
 		break;
 	}
 	stamp.setPosition(passport.getPosition().x + passport.getPosition().x / 2, passport.getPosition().y + passport.getPosition().y / 2);
-	std::cout << "here";
 }

@@ -7,34 +7,39 @@
 class Game
 {
  public:
-  Game(sf::RenderWindow& window);
+  Game(sf::RenderWindow& game_window);
   ~Game();
-  void newAnimal();
-  void dragSprite(sf::Sprite* sprite);
   bool init();
   void update(float dt);
   void render();
+  void mouseClicked(sf::Event event);
   void keyPressed(sf::Event event);
-  void mouseButtonPressed(sf::Event event);
-  void mouseButtonReleased(sf::Event event);
-  void placeStamp(sf::Sprite stamp, sf::Sprite passport, bool valid);
+  void dragSprite(sf::Sprite* sprite);
+  void getAniPass();
 
  private:
-	 sf::Sprite* dragged = nullptr;
+  sf::RenderWindow& window;
+  sf::Sprite ball;
+  sf::Texture ball_texture;
+  void mouseButtonPressed(sf::Event event);
+  void mouseButtonReleased(sf::Event event);
+  //void placeStamp(sf::Sprite stamp, sf::Sprite passport, bool valid);
+  void renderButtons();
 
-	 sf::RenderWindow& window;
-	 sf::Sprite* character;
-	 sf::Sprite* passport;
-	 sf::Texture character_texture;
-	 sf::Texture passport_texture;
 
-	 sf::Sprite* acceptButton;
-	 sf::Texture acceptButton_texture;
-	 sf::Sprite* rejectButton;
-	 sf::Texture rejectButton_texture;
+  sf::Sprite* background;
+  sf::Texture background_texture;
 
-	 sf::Sprite* background;
-	 sf::Texture background_texture;
+  std::unique_ptr<sf::Sprite> animal;
+  sf::Texture animal_texture;
+  std::unique_ptr<sf::Sprite> passport;
+  sf::Texture passport_texture;
+
+
+  sf::Sprite* acceptButton;
+  sf::Texture acceptButton_texture;
+  sf::Sprite* rejectButton;
+  sf::Texture rejectButton_texture;
 
 };
 
