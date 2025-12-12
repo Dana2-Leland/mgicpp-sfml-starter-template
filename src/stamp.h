@@ -5,10 +5,8 @@
 class stamp
 {
 public:
-	bool accepted;
-	void placeStamp(sf::Sprite passport);
+	sf::Texture placeStamp(sf::Sprite passport, bool accepted);
 
 private:
-	sf::Sprite stamp;
 	sf::Texture stamp_texture;
 };

@@ -3,6 +3,7 @@
 #include <iostream>
 #include <random>
 #include "GameObject.h"
+#include "stamp.h"
 
 Game::Game(sf::RenderWindow& game_window) : window(game_window)
 {
@@ -17,7 +18,7 @@ Game::~Game()
 /*
 	Allows player to drag given sprite around scene
 */
-void Game::dragSprite(sf::Sprite * sprite)
+void Game::dragSprite(std::shared_ptr<sf::Sprite> sprite)
 {
 	if (sprite != nullptr) {
 		sf::Vector2i mouse_position = sf::Mouse::getPosition(window);
@@ -43,7 +44,8 @@ void Game::getAniPass()
 	passport = std::make_unique<sf::Sprite>(std::move(thisAnimalPassport.passport)); 
 	passport_texture = sf::Texture(thisAnimalPassport.passport_texture);
 	passport->setTexture(passport_texture);
-	passport->setPosition(500, 100); //set scalable position later
+	passport->setScale(.8, .8);
+	passport->setPosition(500, 0); //set scalable position later
 
 	animal = std::make_unique<sf::Sprite>(std::move(thisAnimalPassport.character));
 	animal_texture = sf::Texture (thisAnimalPassport.character_texture);
@@ -74,7 +76,7 @@ bool Game::init()
 
 void Game::update(float dt)
 {
-
+	dragSprite(dragged);
 }
 
 void Game::render()
@@ -85,17 +87,28 @@ void Game::render()
 	window.draw(*acceptButton);
 	window.draw(*rejectButton);
 
-
+	if (stampSprite.getTexture() != NULL) {
+		window.draw(stampSprite);
+	}
 }
 
 void Game::mouseClicked(sf::Event event)
 {
-	//get the click position
-	sf::Vector2i click = sf::Mouse::getPosition(window);
-
-
+	mouseButtonPressed(event);
 }
 
+void Game::mouseReleased(sf::Event event)
+{
+	mouseButtonReleased(event);
+}
+
+void Game::renderStamp(bool accepted)
+{
+	stamp thisStamp;
+	stamp_texture = thisStamp.placeStamp(*passport, accepted);
+	stampSprite.setTexture(stamp_texture);
+	stampSprite.setPosition(passport->getPosition().x + 50, passport->getPosition().y +50);
+}
 
 void Game::mouseButtonPressed(sf::Event event)
 {
@@ -108,13 +121,15 @@ void Game::mouseButtonPressed(sf::Event event)
 		sf::Vector2f clickf = static_cast<sf::Vector2f>(click);
 
 		if (passport->getGlobalBounds().contains(clickf)) {
-			dragged = std::make_unique<sf::Sprite>(std::move(*passport));
+			dragged = passport;
+			dragSprite(dragged);
+
 		}
 		else if (acceptButton->getGlobalBounds().contains(clickf)) {
-
+			renderStamp(true);
 		}
 		else if (rejectButton->getGlobalBounds().contains(clickf)) {
-
+			renderStamp(false);
 		}
 	}
 }
@@ -136,14 +151,14 @@ void Game::renderButtons() {
 	}
 	acceptButton->setTexture(acceptButton_texture);
 	acceptButton->setScale(.5, .5);
-	acceptButton->setPosition(passport->getPosition().x, passport->getPosition().y + 500);
+	acceptButton->setPosition(passport->getPosition().x + 20, passport->getPosition().y + 600);
 
 	if (!rejectButton_texture.loadFromFile("../Data/Images/Critter Crossing Customs/reject button.png")) {
 		std::cout << "reject button texture could not be loaded";
 	}
-	rejectButton->setTexture(acceptButton_texture);
+	rejectButton->setTexture(rejectButton_texture);
 	rejectButton->setScale(.5, .5);
-	rejectButton->setPosition(passport->getPosition().x, passport->getPosition().y + 500);
+	rejectButton->setPosition(passport->getPosition().x + 300, passport->getPosition().y + 600);
 
 
 }
