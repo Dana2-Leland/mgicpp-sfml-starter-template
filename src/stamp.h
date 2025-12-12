@@ -6,6 +6,7 @@ class stamp
 {
 public:
 	sf::Texture placeStamp(sf::Sprite passport, bool accepted);
+	bool wasAccepted;
 
 private:
 	sf::Texture stamp_texture;

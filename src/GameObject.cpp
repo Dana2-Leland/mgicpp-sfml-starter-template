@@ -38,6 +38,8 @@ void GameObject::getTexture(sf::Texture& targetTexture, std::string animalName, 
 	}
 }
 
+
+
 /*
 fills character and passport sprites, calls getTexture() to assign the textures
 */
@@ -51,7 +53,7 @@ bool GameObject::init()
 	*/
 	std::random_device rd;  // a seed source for the random number engine
 	std::mt19937 gen(rd()); // mersenne_twister_engine seeded with rd()
-	std::uniform_int_distribution<int> distributionAnimalName(0, animalNames.size());
+	std::uniform_int_distribution<int> distributionAnimalName(0, animalNames.size()-1);
 	int randEntry = distributionAnimalName(rd);
 
 	/*
@@ -72,7 +74,7 @@ bool GameObject::init()
 	getTexture(passport_texture, animalNames[randEntry], passType, isValid);
 
 	//load data into passport struct
-	setSprites(character, passport, character_texture, passport_texture);
+	setSprites(character, passport, character_texture, passport_texture, isValid);
 
 	return true;
 }
@@ -80,13 +82,14 @@ bool GameObject::init()
 /*
 * Fills in data for the Passport struct
 */
-void GameObject::setSprites(sf::Sprite Tcharacter, sf::Sprite Tpassport, sf::Texture Tcharacter_texture, sf::Texture Tpassport_texture)
+void GameObject::setSprites(sf::Sprite Tcharacter, sf::Sprite Tpassport, sf::Texture Tcharacter_texture, sf::Texture Tpassport_texture, bool wasValid)
 {
 	AnimalPassport = std::make_unique<Passport>();
 	AnimalPassport->character = Tcharacter;
 	AnimalPassport->passport = Tpassport;
 	AnimalPassport->character_texture = Tcharacter_texture;
 	AnimalPassport->passport_texture = Tpassport_texture;
+	AnimalPassport->isPassValid = wasValid;
 }
 
 /*

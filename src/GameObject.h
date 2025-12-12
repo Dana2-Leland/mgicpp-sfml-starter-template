@@ -8,6 +8,7 @@ struct Passport
 	sf::Sprite passport;
 	sf::Texture character_texture;
 	sf::Texture passport_texture;
+	bool isPassValid;
 
 };
 class GameObject {
@@ -18,7 +19,7 @@ public:
 	bool init();
 	void getTexture(sf::Texture& targetTexture, std::string animalName, spriteType thisSprite, bool valid);
 	Passport& getSprites();
-	void setSprites(sf::Sprite Tcharacter, sf::Sprite Tpassport, sf::Texture Tcharacter_texture, sf::Texture Tpassport_texture);
+	void setSprites(sf::Sprite Tcharacter, sf::Sprite Tpassport, sf::Texture Tcharacter_texture, sf::Texture Tpassport_texture, bool wasValid);
 
 private:
 	std::unique_ptr<Passport> AnimalPassport;

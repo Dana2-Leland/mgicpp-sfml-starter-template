@@ -25,6 +25,7 @@ class Game
   sf::RenderWindow& window;
   sf::Sprite ball;
   sf::Texture ball_texture;
+  void renderScore();
   void mouseButtonPressed(sf::Event event);
   void mouseButtonReleased(sf::Event event);
   //void placeStamp(sf::Sprite stamp, sf::Sprite passport, bool valid);
@@ -33,6 +34,14 @@ class Game
 
   sf::Sprite* background;
   sf::Texture background_texture;
+
+  bool passValid;
+  bool passAccepted;
+  bool stamped;
+
+  int score = 0;
+  sf::Text scoreText;
+  sf::Font scoreFont;
 
   std::unique_ptr<sf::Sprite> animal;
   sf::Texture animal_texture;

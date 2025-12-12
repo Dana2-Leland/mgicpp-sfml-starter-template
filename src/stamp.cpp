@@ -15,6 +15,7 @@ sf::Texture stamp::placeStamp(sf::Sprite passport, bool accepted)
 			}
 			break;
 	}
+	wasAccepted = accepted;
 	return stamp_texture;
 }
 	

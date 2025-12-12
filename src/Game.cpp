@@ -26,6 +26,9 @@ void Game::dragSprite(std::shared_ptr<sf::Sprite> sprite)
 		//make click centered later
 		sprite->setPosition(mouse_positionf.x, mouse_positionf.y);
 		window.draw(*sprite);
+		if (stampSprite.getTexture() != NULL) {
+			stampSprite.setPosition(passport->getPosition().x + 50, passport->getPosition().y + 50);
+		}
 	}
 }
 
@@ -52,6 +55,7 @@ void Game::getAniPass()
 	animal->setTexture(animal_texture);
 	animal->setPosition(100, 100);
 
+	passValid = thisAnimalPassport.isPassValid;
 	}
 
 
@@ -67,8 +71,8 @@ bool Game::init()
 
 	//retrieve animal and passport
 	getAniPass();
-
 	renderButtons();
+	renderScore();
 
 	return true;
 }
@@ -83,14 +87,16 @@ void Game::render()
 {
 	window.draw(*background);
 	window.draw(*passport);
-	window.draw(*animal);
 	window.draw(*acceptButton);
 	window.draw(*rejectButton);
-
-	if (stampSprite.getTexture() != NULL) {
+	window.draw(scoreText);
+	if (stamped) {
 		window.draw(stampSprite);
 	}
+	window.draw(*animal);
+	
 }
+
 
 void Game::mouseClicked(sf::Event event)
 {
@@ -99,6 +105,16 @@ void Game::mouseClicked(sf::Event event)
 
 void Game::mouseReleased(sf::Event event)
 {
+	if (stampSprite.getTexture() != NULL && (animal->getGlobalBounds().intersects(passport->getGlobalBounds()))) {
+		if (passValid == passAccepted) {
+			score += 5;
+		}
+		else {
+			score -= 5;
+		}
+		renderScore();
+		getAniPass();
+	}
 	mouseButtonReleased(event);
 }
 
@@ -108,6 +124,20 @@ void Game::renderStamp(bool accepted)
 	stamp_texture = thisStamp.placeStamp(*passport, accepted);
 	stampSprite.setTexture(stamp_texture);
 	stampSprite.setPosition(passport->getPosition().x + 50, passport->getPosition().y +50);
+	passAccepted = thisStamp.wasAccepted;
+	stamped = true;
+}
+
+void Game:: renderScore() {
+	scoreText.setString(std::to_string(score));
+	if (!scoreFont.loadFromFile("../Data/Fonts/OpenSans-Bold.ttf")) {
+		std::cout << "font could not be loaded";
+	}
+	scoreText.setFont(scoreFont);
+	scoreText.setCharacterSize(40);
+	scoreText.setFillColor(sf::Color(255, 255, 128));
+	scoreText.setPosition(30, 10);
+	stamped = false;
 }
 
 void Game::mouseButtonPressed(sf::Event event)
@@ -123,6 +153,7 @@ void Game::mouseButtonPressed(sf::Event event)
 		if (passport->getGlobalBounds().contains(clickf)) {
 			dragged = passport;
 			dragSprite(dragged);
+
 
 		}
 		else if (acceptButton->getGlobalBounds().contains(clickf)) {
