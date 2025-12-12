@@ -35,16 +35,19 @@ void Game::getAniPass()
 	{
 	//GameObject fills animal & passport values
 	GameObject thisAnimal;
+	thisAnimal.init();
 
 	//get animal & passport from GameObject class
 	Passport& thisAnimalPassport = thisAnimal.getSprites();
 	
-	passport = std::make_unique<sf::Sprite>(std::move(*thisAnimalPassport.passport));
-	passport->setTexture(std::move(*thisAnimalPassport.passport_texture));
+	passport = std::make_unique<sf::Sprite>(std::move(thisAnimalPassport.passport)); 
+	passport_texture = sf::Texture(thisAnimalPassport.passport_texture);
+	passport->setTexture(passport_texture);
 	passport->setPosition(500, 100); //set scalable position later
 
-	animal = std::make_unique<sf::Sprite>(std::move(*thisAnimalPassport.character));
-	animal->setTexture(std::move(*thisAnimalPassport.character_texture));
+	animal = std::make_unique<sf::Sprite>(std::move(thisAnimalPassport.character));
+	animal_texture = sf::Texture (thisAnimalPassport.character_texture);
+	animal->setTexture(animal_texture);
 	animal->setPosition(100, 100);
 
 	}
@@ -96,11 +99,29 @@ void Game::mouseClicked(sf::Event event)
 
 void Game::mouseButtonPressed(sf::Event event)
 {
+	//get the click position
+	sf::Vector2i click = sf::Mouse::getPosition(window);
+
+	//write accept/reject collision checks
+	if (event.mouseButton.button == sf::Mouse::Left) {
+		sf::Vector2i click = sf::Mouse::getPosition(window);
+		sf::Vector2f clickf = static_cast<sf::Vector2f>(click);
+
+		if (passport->getGlobalBounds().contains(clickf)) {
+			dragged = std::make_unique<sf::Sprite>(std::move(*passport));
+		}
+		else if (acceptButton->getGlobalBounds().contains(clickf)) {
+
+		}
+		else if (rejectButton->getGlobalBounds().contains(clickf)) {
+
+		}
+	}
 }
 
 void Game::mouseButtonReleased(sf::Event event)
 {
-	//dragged = nullptr;
+	dragged = nullptr;
 }
 
 /*

@@ -18,6 +18,8 @@ class Game
   void getAniPass();
 
  private:
+  std::unique_ptr<sf::Sprite> dragged;
+  //sf::Sprite* dragged = nullptr;
   sf::RenderWindow& window;
   sf::Sprite ball;
   sf::Texture ball_texture;

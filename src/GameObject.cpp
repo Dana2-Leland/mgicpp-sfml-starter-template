@@ -83,10 +83,10 @@ bool GameObject::init()
 void GameObject::setSprites(sf::Sprite Tcharacter, sf::Sprite Tpassport, sf::Texture Tcharacter_texture, sf::Texture Tpassport_texture)
 {
 	AnimalPassport = std::make_unique<Passport>();
-	AnimalPassport->character = std::make_unique<sf::Sprite>(Tcharacter);
-	AnimalPassport->passport = std::make_unique<sf::Sprite>(Tpassport);
-	AnimalPassport->character_texture = std::make_unique<sf::Texture>(Tcharacter_texture);
-	AnimalPassport->passport_texture = std::make_unique<sf::Texture>(Tpassport_texture);
+	AnimalPassport->character = Tcharacter;
+	AnimalPassport->passport = Tpassport;
+	AnimalPassport->character_texture = Tcharacter_texture;
+	AnimalPassport->passport_texture = Tpassport_texture;
 }
 
 /*
